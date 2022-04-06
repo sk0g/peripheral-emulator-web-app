@@ -1,65 +1,50 @@
 <script>
-  import logo from './assets/svelte.png'
-  import Counter from './lib/Counter.svelte'
+  import Header from "./lib/Header.svelte";
 </script>
 
 <main>
-  <img src={logo} alt="Svelte Logo" />
-  <h1>Hello world!</h1>
-
-  <Counter />
-
-  <p>
-    Visit <a href="https://svelte.dev">svelte.dev</a> to learn how to build Svelte
-    apps.
-  </p>
-
-  <p>
-    Check out <a href="https://github.com/sveltejs/kit#readme">SvelteKit</a> for
-    the officially supported framework, also powered by Vite!
-  </p>
+  <div class="container mx-auto">
+    <Header></Header>
+    <div class="flex flex-row py-4">
+      <div class="grid-cols-1 basis-1/4 px-2">
+        <div class="gpio">GPIO #1</div>
+        <div class="gpio">GPIO #2</div>
+        <div class="gpio">GPIO #3</div>
+        <div class="gpio">GPIO #4</div>
+        <div class="gpio">GPIO #5</div>
+        <div class="gpio">GPIO #6</div>
+        <div class="gpio">GPIO #7</div>
+        <div class="gpio">GPIO #8</div>
+        <div class="gpio">GPIO #9</div>
+        <div class="gpio">GPIO #10</div>
+        <div class="gpio">GPIO #11</div>
+        <div class="gpio">GPIO #12</div>
+        <div class="gpio">GPIO #13</div>
+        <div class="gpio">GPIO #14</div>
+        <div class="gpio">GPIO #15</div>
+        <div class="gpio">GPIO #16</div>
+        <div class="gpio">GPIO #17</div>
+        <div class="gpio">GPIO #18</div>
+        <div class="gpio">GPIO #19</div>
+        <div class="gpio">GPIO #20</div>
+        <div class="gpio">GPIO #21</div>
+        <div class="gpio">GPIO #22</div>
+        <div class="gpio">GPIO #23</div>
+        <div class="gpio">GPIO #24</div>
+        <div class="gpio">GPIO #25</div>
+        <div class="gpio">GPIO #26</div>
+      </div>
+      <div class="basis-3/4">asd</div>
+    </div>
+  </div>
 </main>
 
 <style>
-  :root {
-    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen,
-      Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
-  }
-
-  main {
+  .gpio {
+    border-style: double;
+    border-radius: 9999px;
+    border-width: 5px;
     text-align: center;
-    padding: 1em;
-    margin: 0 auto;
-  }
-
-  img {
-    height: 16rem;
-    width: 16rem;
-  }
-
-  h1 {
-    color: #ff3e00;
-    text-transform: uppercase;
-    font-size: 4rem;
-    font-weight: 100;
-    line-height: 1.1;
-    margin: 2rem auto;
-    max-width: 14rem;
-  }
-
-  p {
-    max-width: 14rem;
-    margin: 1rem auto;
-    line-height: 1.35;
-  }
-
-  @media (min-width: 480px) {
-    h1 {
-      max-width: none;
-    }
-
-    p {
-      max-width: none;
-    }
+    background-color: hsl(250, 50%, 80%);
   }
 </style>
