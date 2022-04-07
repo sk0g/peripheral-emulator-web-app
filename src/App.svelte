@@ -1,40 +1,36 @@
 <script>
   import Header from "./lib/Header.svelte";
+
+  import { gpioPins } from "./gpioPins";
+
+  import { GPIO } from "./stores";
+
+  function toggleGPIO(gpioPin, atIndex) {
+    gpioPin.data.update((n) => (n == 0 ? 1 : 0));
+  }
 </script>
 
 <main>
   <div class="container mx-auto">
-    <Header></Header>
+    <Header />
     <div class="flex flex-row py-4">
       <div class="grid-cols-1 basis-1/4 px-2">
-        <div class="gpio">GPIO #1</div>
-        <div class="gpio">GPIO #2</div>
-        <div class="gpio">GPIO #3</div>
-        <div class="gpio">GPIO #4</div>
-        <div class="gpio">GPIO #5</div>
-        <div class="gpio">GPIO #6</div>
-        <div class="gpio">GPIO #7</div>
-        <div class="gpio">GPIO #8</div>
-        <div class="gpio">GPIO #9</div>
-        <div class="gpio">GPIO #10</div>
-        <div class="gpio">GPIO #11</div>
-        <div class="gpio">GPIO #12</div>
-        <div class="gpio">GPIO #13</div>
-        <div class="gpio">GPIO #14</div>
-        <div class="gpio">GPIO #15</div>
-        <div class="gpio">GPIO #16</div>
-        <div class="gpio">GPIO #17</div>
-        <div class="gpio">GPIO #18</div>
-        <div class="gpio">GPIO #19</div>
-        <div class="gpio">GPIO #20</div>
-        <div class="gpio">GPIO #21</div>
-        <div class="gpio">GPIO #22</div>
-        <div class="gpio">GPIO #23</div>
-        <div class="gpio">GPIO #24</div>
-        <div class="gpio">GPIO #25</div>
-        <div class="gpio">GPIO #26</div>
+        {#each gpioPins as gpioPin, i}
+          <div class="gpio grid grid-cols-3">
+            <p class="basis-1" />
+            <p class="basis-1">{gpioPin.label}</p>
+            <button
+              class="basis-1"
+              on:click={() => {
+                toggleGPIO(gpioPin, i);
+              }}
+            >
+              {$GPIO[i] === 0 ? "⚫" : "🟢"}
+            </button>
+          </div>
+        {/each}
       </div>
-      <div class="basis-3/4">asd</div>
+      <div class="basis-3/4">{$GPIO}</div>
     </div>
   </div>
 </main>
