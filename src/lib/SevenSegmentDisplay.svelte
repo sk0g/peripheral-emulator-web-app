@@ -1,4 +1,5 @@
 <script>
+    // @ts-expect-error
     import { GPIO } from "@/stores";
 
     let pinsEnabled = {
