@@ -41,6 +41,6 @@
     border-radius: 9999px;
     border-width: 5px;
     text-align: center;
-    background-color: hsl(250, 50%, 80%);
+    background-color: rgba(253, 187, 116, 0.6);
   }
 </style>

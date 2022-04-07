@@ -12,7 +12,7 @@
 
 <div
     style:background-color={modeIsDebug
-        ? "rgba(253, 187, 116, 0.6"
+        ? "rgba(253, 187, 116, 0.6)"
         : "rgba(94, 234, 212, 0.6)"}
     class="flex place-content-center sticky top-0 -mx-7 z-50"
 >
