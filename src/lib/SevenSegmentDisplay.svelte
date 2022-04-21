@@ -11,7 +11,7 @@
     g: false,
   };
 
-  GPIO.subscribe((vals) => {
+  GPIO.subscribe(vals => {
     pinsEnabled.a = vals[0] == 1;
     pinsEnabled.b = vals[1] == 1;
     pinsEnabled.c = vals[2] == 1;
@@ -25,32 +25,25 @@
 <div class="grid gap-1">
   <div
       style:background-color={pinsEnabled.a ? "cyan" : "gray"}
-      class="segment sA"
-  />
+      class="segment sA"></div>
   <div
       style:background-color={pinsEnabled.b ? "cyan" : "gray"}
-      class="segment sB"
-  />
+      class="segment sB"></div>
   <div
       style:background-color={pinsEnabled.c ? "cyan" : "gray"}
-      class="segment sC"
-  />
+      class="segment sC"></div>
   <div
       style:background-color={pinsEnabled.d ? "cyan" : "gray"}
-      class="segment sD"
-  />
+      class="segment sD"></div>
   <div
       style:background-color={pinsEnabled.e ? "cyan" : "gray"}
-      class="segment sE"
-  />
+      class="segment sE"></div>
   <div
       style:background-color={pinsEnabled.f ? "cyan" : "gray"}
-      class="segment sF"
-  />
+      class="segment sF"></div>
   <div
       style:background-color={pinsEnabled.g ? "cyan" : "gray"}
-      class="segment sG"
-  />
+      class="segment sG"></div>
 </div>
 
 <style>
