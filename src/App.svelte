@@ -1,22 +1,24 @@
 <script>
   import Header from "./lib/Header.svelte";
-  import { GPIO } from "./stores.js";
-  import GpioView from "./lib/GpioView.svelte";
+  import GpioInputs from "./lib/GpioInputs.svelte";
   import PeripheralSelector from "./lib/PeripheralSelector.svelte";
+  import GpioOutputs from "./lib/GpioOutputs.svelte";
 </script>
 
-<html data-theme="garden">
+<html data-theme="garden" lang="en-AU">
 <main>
   <div class="container">
     <Header />
-    <div class="grid grid-cols-4 py-4">
+    <div class="grid grid-cols-4 py-4 gap-4">
       <div class="col-span-1 basis-1/4 px-2">
-        <GpioView />
+        <GpioInputs />
       </div>
       <div class="col-span-2">
         <PeripheralSelector></PeripheralSelector>
       </div>
-      <div class="col-span-1">{$GPIO}</div>
+      <div class="col-span-1">
+        <GpioOutputs />
+      </div>
     </div>
   </div>
 </main>

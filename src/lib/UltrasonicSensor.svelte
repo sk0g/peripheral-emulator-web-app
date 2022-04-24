@@ -1,29 +1,28 @@
 <script>
-  import Slider from "svelte-slider";
 
-  let distance = 109;
-  let displayString = "1.09 m"
+  let distance = 100;
 
-  function getFormattedDistance() {
-    let calcDistance = 8 + (distance * 392)
-    calcDistance = calcDistance.toFixed(1)
+  function getFormattedDistance(d) {
+    let calcDistance = distance.toFixed(1);
 
-    if (calcDistance > 100) {
-      displayString = `${calcDistance / 100} m`;
+    if (calcDistance >= 100) {
+      return `${calcDistance / 100} m`;
     }
-    displayString = `${calcDistance} cm`;
+    return `${calcDistance} cm`;
   }
 </script>
 
-Distance: {displayString}
-<div class="slider">
-  <Slider on:change={(event) => {distance = event.detail[1]; getFormattedDistance()}} value={[0, 1]} single />
-</div>
+<p class="my-4">Distance: {getFormattedDistance(distance)}</p>
 
-<style>
-  .slider {
-    --sliderPrimary: #FF9800;
-    --sliderSecondary: rgba(0, 0, 0, 0.05);
-    margin: 16px;
-  }
-</style>
+<input
+  bind:value={distance}
+  class="range range-primary range-xs"
+  max="400"
+  min="1"
+  type="range"
+>
+<div class="grid grid-flow-col auto-cols-fr">
+  <p class="col-span-3" style="grid-column-start: 1;">&nbsp;| 8cm</p>
+  <p style="grid-column-start: 4;">| 1m</p>
+  <p style="grid-column-end: 13;">4m |</p>
+</div>
