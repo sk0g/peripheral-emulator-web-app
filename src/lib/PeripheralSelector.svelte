@@ -6,6 +6,8 @@
 
 <div class="flex flex-col">
   <div class="tabs justify-center">
+    <a class="tab tab-bordered {$selectedComponent === 'LED' ? 'tab-active': ''}"
+       on:click={() => $selectedComponent = "LED"}>LED</a>
     <a class="tab tab-bordered {$selectedComponent === 'SevenSegmentDisplay' ? 'tab-active': ''}"
        on:click={() => $selectedComponent = "SevenSegmentDisplay"}>7-segment display</a>
     <a class="tab tab-bordered {$selectedComponent === 'UltrasonicSensor' ? 'tab-active' : ''}"
