@@ -1,64 +1,23 @@
 <script>
   import Header from "./lib/Header.svelte";
-
-  import { gpioPins } from "./gpioPins";
-
-  import { GPIO } from "./stores";
-
-  import SevenSegmentDisplay from "./lib/SevenSegmentDisplay.svelte";
-  import { selectedComponent } from "./configStore.js";
-  import UltrasonicSensor from "./lib/UltrasonicSensor.svelte";
-
-  function toggleGPIO(gpioPin, atIndex) {
-    gpioPin.data.update((n) => (n == 0 ? 1 : 0));
-  }
+  import { GPIO } from "./stores.js";
+  import GpioView from "./lib/GpioView.svelte";
+  import PeripheralSelector from "./lib/PeripheralSelector.svelte";
 </script>
 
+<html data-theme="garden">
 <main>
-  <div class="container mx-auto">
+  <div class="container">
     <Header />
-    <div class="flex flex-row basis-4 py-4">
-      <div class="grid-cols-1 basis-1/4 px-2">
-        <div class="basis-1/4">
-          {#each gpioPins as gpioPin, i}
-            <div class="gpio grid grid-cols-3">
-              <p class="basis-1" />
-              <p class="basis-1">{gpioPin.label}</p>
-              <button
-                class="basis-1"
-                on:click={() => {
-                  toggleGPIO(gpioPin, i);
-                }}
-              >
-                {$GPIO[i] === 0 ? "⚫" : "🟢"}
-              </button>
-            </div>
-          {/each}
-        </div>
+    <div class="grid grid-cols-4 py-4">
+      <div class="col-span-1 basis-1/4 px-2">
+        <GpioView />
       </div>
-      <div class="basis-2/4">
-        <select bind:value={$selectedComponent}>
-          <option value="SevenSegmentDisplay">7-segment display</option>
-          <option value="UltrasonicSensor">Ultrasonic sensor</option>
-        </select>
-        {#if $selectedComponent == 'SevenSegmentDisplay'}
-          <SevenSegmentDisplay />
-        {/if}
-        {#if $selectedComponent == 'UltrasonicSensor'}
-          <UltrasonicSensor />
-        {/if}
+      <div class="col-span-2">
+        <PeripheralSelector></PeripheralSelector>
       </div>
-      <div class="basis-1/4">{$GPIO}</div>
+      <div class="col-span-1">{$GPIO}</div>
     </div>
   </div>
 </main>
-
-<style>
-  .gpio {
-    border-style: double;
-    border-radius: 9999px;
-    border-width: 5px;
-    text-align: center;
-    background-color: rgba(253, 187, 116, 0.6);
-  }
-</style>
+</html>

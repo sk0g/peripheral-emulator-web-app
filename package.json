@@ -19,6 +19,7 @@
     "vite": "^2.9.0"
   },
   "dependencies": {
+    "daisyui": "^2.14.2",
     "svelte-slider": "^1.0.1"
   }
 }
