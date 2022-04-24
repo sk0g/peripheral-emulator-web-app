@@ -7,24 +7,16 @@
   }
 </script>
 
-<div class="card">
+<h1 class="text-center">Device Input</h1>
 {#each gpioPins as gpioPin, i}
-  <div class="card-compact gpio grid grid-cols-3">
-    <p class="">{gpioPin.label}</p>
-    <btn
-      class=""
-      on:click={() => {
+  <button
+    class="btn btn-sm btn-active btn-block {$GPIO[i] <= .1 ? '' : 'btn-accent'}"
+    on:click={() => {
                   toggleGPIO(gpioPin, i);
                 }}
-    >
-      {$GPIO[i] === 0 ? "⚫" : "🟢"}
-    </btn>
-  </div>
+  >
+    {gpioPin.label}
+  </button>
+  <div class="h-1"></div>
 {/each}
-</div>
 
-<style>
-  .gpio {
-    text-align: center;
-  }
-</style>
