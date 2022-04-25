@@ -1,14 +1,14 @@
 <script>
 
-  let distance = 100;
+  let distance = 100
 
   function getFormattedDistance(d) {
-    let calcDistance = distance.toFixed(1);
+    let calcDistance = distance.toFixed(1)
 
     if (calcDistance >= 100) {
-      return `${calcDistance / 100} m`;
+      return `${calcDistance / 100} m`
     }
-    return `${calcDistance} cm`;
+    return `${calcDistance} cm`
   }
 </script>
 

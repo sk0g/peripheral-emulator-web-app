@@ -1,9 +1,9 @@
 <script>
-  import { gpioPins } from "../gpioPins.js";
-  import { GPIO } from "../stores.js";
+  import { gpioPins } from "../gpioPins.js"
+  import { GPIO } from "../stores.js"
 
   function toggleGPIO(gpioPin, atIndex) {
-    gpioPin.data.update((n) => (n == 0 ? 1 : 0));
+    gpioPin.data.update((n) => (n == 0 ? 1 : 0))
   }
 </script>
 

@@ -1,6 +1,6 @@
 <script>
-  import { gpioPins } from "../gpioPins.js";
-  import { GPIO } from "../stores.js";
+  import { gpioPins } from "../gpioPins.js"
+  import { GPIO } from "../stores.js"
 </script>
 
 <h1 class="text-center">Device Outputs</h1>

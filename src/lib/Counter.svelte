@@ -1,8 +1,8 @@
 <script>
-  let count = 0;
+  let count = 0
   const increment = () => {
-    count += 1;
-  };
+    count += 1
+  }
 </script>
 
 <button class="bg-red-200 py-3 px-6 rounded" on:click={increment}>

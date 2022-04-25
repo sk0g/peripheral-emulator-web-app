@@ -1,6 +1,6 @@
 <script>
   // @ts-expect-error
-  import {GPIO} from "@/stores";
+  import { GPIO } from "@/stores"
 
   let pinsEnabled = {
     a: false,
@@ -8,42 +8,42 @@
     c: false,
     d: false,
     f: false,
-    g: false,
-  };
+    g: false
+  }
 
   GPIO.subscribe(vals => {
-    pinsEnabled.a = vals[0] == 1;
-    pinsEnabled.b = vals[1] == 1;
-    pinsEnabled.c = vals[2] == 1;
-    pinsEnabled.d = vals[3] == 1;
-    pinsEnabled.e = vals[4] == 1;
-    pinsEnabled.f = vals[5] == 1;
-    pinsEnabled.g = vals[6] == 1;
-  });
+    pinsEnabled.a = vals[0] == 1
+    pinsEnabled.b = vals[1] == 1
+    pinsEnabled.c = vals[2] == 1
+    pinsEnabled.d = vals[3] == 1
+    pinsEnabled.e = vals[4] == 1
+    pinsEnabled.f = vals[5] == 1
+    pinsEnabled.g = vals[6] == 1
+  })
 </script>
 
 <div class="grid gap-1">
   <div
-      style:background-color={pinsEnabled.a ? "cyan" : "gray"}
-      class="segment sA"></div>
+    class="segment sA"
+    style:background-color={pinsEnabled.a ? "cyan" : "gray"}></div>
   <div
-      style:background-color={pinsEnabled.b ? "cyan" : "gray"}
-      class="segment sB"></div>
+    class="segment sB"
+    style:background-color={pinsEnabled.b ? "cyan" : "gray"}></div>
   <div
-      style:background-color={pinsEnabled.c ? "cyan" : "gray"}
-      class="segment sC"></div>
+    class="segment sC"
+    style:background-color={pinsEnabled.c ? "cyan" : "gray"}></div>
   <div
-      style:background-color={pinsEnabled.d ? "cyan" : "gray"}
-      class="segment sD"></div>
+    class="segment sD"
+    style:background-color={pinsEnabled.d ? "cyan" : "gray"}></div>
   <div
-      style:background-color={pinsEnabled.e ? "cyan" : "gray"}
-      class="segment sE"></div>
+    class="segment sE"
+    style:background-color={pinsEnabled.e ? "cyan" : "gray"}></div>
   <div
-      style:background-color={pinsEnabled.f ? "cyan" : "gray"}
-      class="segment sF"></div>
+    class="segment sF"
+    style:background-color={pinsEnabled.f ? "cyan" : "gray"}></div>
   <div
-      style:background-color={pinsEnabled.g ? "cyan" : "gray"}
-      class="segment sG"></div>
+    class="segment sG"
+    style:background-color={pinsEnabled.g ? "cyan" : "gray"}></div>
 </div>
 
 <style>

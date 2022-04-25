@@ -1,7 +1,7 @@
 <script>
-  import { selectedComponent } from "../configStore.js";
-  import SevenSegmentDisplay from "./SevenSegmentDisplay.svelte";
-  import UltrasonicSensor from "./UltrasonicSensor.svelte";
+  import { selectedComponent } from "../configStore.js"
+  import SevenSegmentDisplay from "./SevenSegmentDisplay.svelte"
+  import UltrasonicSensor from "./UltrasonicSensor.svelte"
 </script>
 
 <div class="flex flex-col">
