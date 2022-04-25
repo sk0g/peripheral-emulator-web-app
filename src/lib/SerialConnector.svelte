@@ -1,21 +1,18 @@
 <script>
   import { fade } from "svelte/transition"
 
-  import { baudRate } from "../configStore.js"
-
-  let stopBits = 1
-  let parity = "none"
-  let flowControl = "none"
+  import { serialConfBaudRate, serialConfFlowControl, serialConfParity, serialConfStopBits } from "../configStore.js"
 </script>
 
 <div class="serial-conf h-1/2" transition:fade>
 
   <div class="dropdown dropdown-end">
     <label class="btn m-1 btn-secondary" tabindex="0">Configure Serial</label>
-    <div class="dropdown-content menu p-2 shadow bg-secondary text-secondary-content rounded-box w-52"
+    <div class="dropdown-content menu px-2 shadow bg-secondary text-secondary-content rounded-box w-52"
          tabindex="0">
       <div class="divider divider-vertical">Baud Rate</div>
-      <select bind:value={$baudRate} class="select select-secondary" id="baud" name="Baud Rate">
+      <select bind:value={$serialConfBaudRate} class="select select-primary select-sm" id="baud"
+              name="Baud Rate">
         <option value="115200">115200</option>
         <option value="57600">57600</option>
         <option value="38400">38400</option>
@@ -26,23 +23,25 @@
       </select>
 
       <div class="divider divider-vertical">Stop Bits</div>
-      <select bind:value={stopBits} class="select select-secondary" id="stopBits" name="Stop Bits">
+      <select bind:value={$serialConfStopBits} class="select select-primary select-sm" id="stopBits" name="Stop Bits">
         <option value="1">1</option>
         <option value="2">2</option>
       </select>
 
       <div class="divider divider-vertical">Parity</div>
-      <select bind:value={parity} class="select select-secondary" id="parity" name="Parity">
+      <select bind:value={$serialConfParity} class="select select-primary select-sm" id="parity" name="Parity">
         <option value="none">none</option>
         <option value="even">even</option>
         <option value="odd">odd</option>
       </select>
 
       <div class="divider divider-vertical">Flow Control</div>
-      <select bind:value={flowControl} class="select select-secondary" id="flowControl" name="Flow Control">
+      <select bind:value={$serialConfFlowControl} class="select select-primary select-sm" id="flowControl"
+              name="Flow Control">
         <option value="none">none</option>
         <option value="hardware">hardware</option>
       </select>
+      <div class="py-1.5"></div>
     </div>
   </div>
   <div class="divider divider-horizontal"></div>
