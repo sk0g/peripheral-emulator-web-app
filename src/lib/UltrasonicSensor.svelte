@@ -21,8 +21,8 @@
   min="1"
   type="range"
 >
-<div class="grid grid-flow-col auto-cols-fr">
-  <p class="col-span-3" style="grid-column-start: 1;">&nbsp;| 8cm</p>
-  <p style="grid-column-start: 4;">| 1m</p>
-  <p style="grid-column-end: 13;">4m |</p>
+<div class="flex flex-row flex-nowrap">
+  <p style="flex-grow: 4; margin-left: 5px;">| 8cm</p>
+  <p style="flex-grow: 15">| 1m</p>
+  <p style="flex-direction: row-reverse; margin-right: 5px">4m |</p>
 </div>
