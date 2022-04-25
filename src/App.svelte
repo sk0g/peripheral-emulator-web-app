@@ -1,8 +1,8 @@
 <script>
-  import Header from "./lib/Header.svelte";
-  import GpioInputs from "./lib/GpioInputs.svelte";
-  import PeripheralSelector from "./lib/PeripheralSelector.svelte";
-  import GpioOutputs from "./lib/GpioOutputs.svelte";
+  import Header from "./lib/Header.svelte"
+  import GpioInputs from "./lib/GpioInputs.svelte"
+  import PeripheralSelector from "./lib/PeripheralSelector.svelte"
+  import GpioOutputs from "./lib/GpioOutputs.svelte"
 </script>
 
 <html data-theme="garden" lang="en-AU">

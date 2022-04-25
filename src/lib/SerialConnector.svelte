@@ -1,22 +1,51 @@
 <script>
-  import { fade } from "svelte/transition";
+  import { fade } from "svelte/transition"
 
-  import { baudRate } from "../configStore.js";
+  import { baudRate } from "../configStore.js"
+
+  let stopBits = 1
+  let parity = "none"
+  let flowControl = "none"
 </script>
 
 <div class="serial-conf h-1/2" transition:fade>
-  <div class="serial-option">
-    Baud Rate
-    <select bind:value={$baudRate} id="baud" name="Baud Rate">
-      <option value="115200">115200</option>
-      <option value="57600">57600</option>
-      <option value="38400">38400</option>
-      <option value="28800">28800</option>
-      <option value="14400">14400</option>
-      <option value="19200">19200</option>
-      <option value="9600">9600</option>
-    </select>
+
+  <div class="dropdown dropdown-end">
+    <label class="btn m-1 btn-secondary" tabindex="0">Configure Serial</label>
+    <div class="dropdown-content menu p-2 shadow bg-secondary text-secondary-content rounded-box w-52"
+         tabindex="0">
+      <div class="divider divider-vertical">Baud Rate</div>
+      <select bind:value={$baudRate} class="select select-secondary" id="baud" name="Baud Rate">
+        <option value="115200">115200</option>
+        <option value="57600">57600</option>
+        <option value="38400">38400</option>
+        <option value="28800">28800</option>
+        <option value="14400">14400</option>
+        <option value="19200">19200</option>
+        <option value="9600">9600</option>
+      </select>
+
+      <div class="divider divider-vertical">Stop Bits</div>
+      <select bind:value={stopBits} class="select select-secondary" id="stopBits" name="Stop Bits">
+        <option value="1">1</option>
+        <option value="2">2</option>
+      </select>
+
+      <div class="divider divider-vertical">Parity</div>
+      <select bind:value={parity} class="select select-secondary" id="parity" name="Parity">
+        <option value="none">none</option>
+        <option value="even">even</option>
+        <option value="odd">odd</option>
+      </select>
+
+      <div class="divider divider-vertical">Flow Control</div>
+      <select bind:value={flowControl} class="select select-secondary" id="flowControl" name="Flow Control">
+        <option value="none">none</option>
+        <option value="hardware">hardware</option>
+      </select>
+    </div>
   </div>
+  <div class="divider divider-horizontal"></div>
   <div>
     <button class="rounded">
       Connect
