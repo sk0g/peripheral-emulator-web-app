@@ -4,14 +4,16 @@
 </script>
 
 <div
-  class="navbar flex flex-row w-full place-content-between
-{$isDebug == 'true' ? 'bg-accent-content': 'bg-primary-focus'} text-accent"
+  class="navbar flex flex-row w-full place-content-between bg-primary text-accent"
 >
 
   <div class="place-content-center">
-    <button class="px-2 hover:bg-accent-content" on:click={() => $isDebug='true'}>Debug</button>
+    <button class="btn {$isDebug == 'true' ? 'btn-accent': 'btn-primary'} px-2" on:click={() => $isDebug='true'}>Debug
+    </button>
     <div class="divider divider-horizontal"></div>
-    <button class="px-2 hover:bg-primary-focus" on:click={() => $isDebug='false'}>Device</button>
+    <button class="btn {$isDebug == 'true' ?  'btn-primary': 'btn-accent'} px-2" on:click={() => $isDebug='false'}>
+      Device
+    </button>
   </div>
 
   {#if $isDebug == 'false'}

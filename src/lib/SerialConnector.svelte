@@ -4,10 +4,9 @@
   import { serialConfBaudRate, serialConfFlowControl, serialConfParity, serialConfStopBits } from "../configStore.js"
 </script>
 
-<div class="serial-conf h-1/2" transition:fade>
-
+<div class="serial-conf" transition:fade>
   <div class="dropdown dropdown-end">
-    <label class="btn m-1 btn-secondary" tabindex="0">Configure Serial</label>
+    <label class="btn p-1 btn-secondary" tabindex="0">Configure Serial</label>
     <div class="dropdown-content menu px-2 shadow bg-secondary text-secondary-content rounded-box w-52"
          tabindex="0">
       <div class="divider divider-vertical">Baud Rate</div>
@@ -46,7 +45,7 @@
   </div>
   <div class="divider divider-horizontal"></div>
   <div>
-    <button class="rounded">
+    <button class="btn btn-primary">
       Connect
     </button>
   </div>

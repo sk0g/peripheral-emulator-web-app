@@ -7,7 +7,7 @@
 
 <html data-theme="garden" lang="en-AU">
 <main>
-  <div class="container">
+  <div class="container mx-auto">
     <Header />
     <div class="grid grid-cols-4 py-4 gap-4">
       <div class="col-span-1 basis-1/4 px-2">
