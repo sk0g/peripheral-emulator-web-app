@@ -2,6 +2,11 @@
   import { fade } from "svelte/transition"
 
   import { serialConfBaudRate, serialConfFlowControl, serialConfParity, serialConfStopBits } from "../configStore.js"
+  import { sendSetupCommands } from "../gpio.js"
+
+  function connectToSerial() {
+    sendSetupCommands()
+  }
 </script>
 
 <div class="serial-conf" transition:fade>
@@ -45,7 +50,7 @@
   </div>
   <div class="divider divider-horizontal"></div>
   <div>
-    <button class="btn btn-primary">
+    <button class="btn btn-primary" on:click={connectToSerial}>
       Connect
     </button>
   </div>

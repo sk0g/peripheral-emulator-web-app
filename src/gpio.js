@@ -35,13 +35,24 @@ class Pin {
     this.value = newValue
   }
 
+  // helpers and utilities
+  getSetupMessage() {
+    if (!this.usable) return
+
+    return `S${this.isInput ? "I" : "O"}${this.getPaddedPinNumber()}`
+  }
+
+  getPaddedPinNumber() {
+    return String(this.gpioNumber).padStart(2, "0")
+  }
+
   // logging and debug
   logGeneral(message) {
-    console.log(`GPIO${this.gpioNumber}: ${message}`)
+    console.log(`GPIO ${this.getPaddedPinNumber()} | ${message}`)
   }
 
   logWarning(message) {
-    console.warn(`GPIO${this.gpioNumber} | ${message}`)
+    console.warn(`GPIO ${this.getPaddedPinNumber()} | ${message}`)
   }
 }
 
@@ -80,13 +91,13 @@ export let picoGpioPins = [
 ]
 
 export function sendSetupCommands() {
-  for (let p of pins) {
+  for (let p of picoGpioPins) {
     if (!p.usable) {
-      console.info(`Pin setup: unusable pin ${p.gpioNumber}`)
+      p.logGeneral(`pin setup: unusable pin ${p.gpioNumber}`)
       continue
     }
 
-    console.info(`Pin setup: ${p.gpioNumber} setting to ${p.isInput ? "input" : "output"}`)
+    p.logGeneral(`pin setup: command ${p.getSetupMessage()}`)
   }
 }
 
@@ -96,6 +107,6 @@ export function sendSetupCommands() {
 function setPinIsInput(gpioNumber) {
   const p = pins[gpioNumber]
   if (!p.usable || !p.canInput) {
-    console.warn(`Pin setup issue: trying to set up ${gpioNumber} as input, config is ${p}`)
+    p.logWarning(`pin setup: trying to set up ${gpioNumber} as input, config is ${p}`)
   }
 }
