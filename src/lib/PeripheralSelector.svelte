@@ -2,6 +2,7 @@
   import { selectedComponent } from "../configStore.js"
   import SevenSegmentDisplay from "./SevenSegmentDisplay.svelte"
   import UltrasonicSensor from "./UltrasonicSensor.svelte"
+  import LedComponent from "./LedComponent.svelte"
 </script>
 
 <div class="flex flex-col">
@@ -15,10 +16,11 @@
   </div>
 
   <div class="card card-bordered shadow-xl my-5 py-2 px-5">
-    {#if $selectedComponent === 'SevenSegmentDisplay'}
+    {#if $selectedComponent === 'LED'}
+      <LedComponent />
+    {:else if $selectedComponent === 'SevenSegmentDisplay'}
       <SevenSegmentDisplay />
-    {/if}
-    {#if $selectedComponent === 'UltrasonicSensor'}
+    {:else if $selectedComponent === 'UltrasonicSensor'}
       <UltrasonicSensor />
     {/if}
   </div>
