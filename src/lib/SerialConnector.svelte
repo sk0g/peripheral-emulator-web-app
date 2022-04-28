@@ -3,10 +3,7 @@
 
   import { serialConfBaudRate, serialConfFlowControl, serialConfParity, serialConfStopBits } from "../stores.js"
   import { sendSetupCommands } from "../gpio.js"
-
-  function connectToSerial() {
-    sendSetupCommands()
-  }
+  import { connectToSerial } from "./serialConnection.js"
 </script>
 
 <div class="serial-conf" transition:fade>
