@@ -17,3 +17,5 @@ export const serialConfBaudRate = createWritable("baudRate", "115200")
 export const serialConfStopBits = createWritable("stopBits", "1")
 export const serialConfParity = createWritable("parity", "none")
 export const serialConfFlowControl = createWritable("flowControl", "none")
+
+export const statusSerialConnection = createWritable("statusSerialConnection", "waiting")

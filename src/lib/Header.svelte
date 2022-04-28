@@ -1,5 +1,5 @@
 <script>
-  import { isDebug } from "../configStore.js"
+  import { isDebug } from "../stores.js"
   import SerialConnector from "./SerialConnector.svelte"
 </script>
 

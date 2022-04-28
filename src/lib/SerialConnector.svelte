@@ -1,7 +1,7 @@
 <script>
   import { fade } from "svelte/transition"
 
-  import { serialConfBaudRate, serialConfFlowControl, serialConfParity, serialConfStopBits } from "../configStore.js"
+  import { serialConfBaudRate, serialConfFlowControl, serialConfParity, serialConfStopBits } from "../stores.js"
   import { sendSetupCommands } from "../gpio.js"
 
   function connectToSerial() {

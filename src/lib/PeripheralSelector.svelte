@@ -1,5 +1,5 @@
 <script>
-  import { selectedComponent } from "../configStore.js"
+  import { selectedComponent } from "../stores.js"
   import SevenSegmentDisplay from "./SevenSegmentDisplay.svelte"
   import UltrasonicSensor from "./UltrasonicSensor.svelte"
   import LedComponent from "./LedComponent.svelte"
