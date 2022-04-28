@@ -1,4 +1,4 @@
-import { pinStores } from "./stores.js"
+import { pinStores } from "./gpioStores.js"
 
 
 class Pin {

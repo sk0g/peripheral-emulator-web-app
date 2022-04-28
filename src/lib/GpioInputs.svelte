@@ -1,6 +1,6 @@
 <script>
   import { picoGpioPins } from "../gpio.js"
-  import { GPIO } from "../stores.js"
+  import { GPIO } from "../gpioStores.js"
 </script>
 
 <h1 class="text-center">Device Input</h1>

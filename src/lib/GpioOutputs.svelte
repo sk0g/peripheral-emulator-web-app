@@ -1,5 +1,4 @@
 <script>
-  import { GPIO } from "../stores.js"
   import { picoGpioPins } from "../gpio.js"
 </script>
 

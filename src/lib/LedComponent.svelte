@@ -1,5 +1,5 @@
 <script>
-  import { GPIO } from "../stores.js"
+  import { GPIO } from "../gpioStores.js"
 </script>
 
 <div class="flex justify-center">

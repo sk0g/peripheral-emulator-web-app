@@ -1,49 +1,29 @@
 <script>
-  // @ts-expect-error
-  import { GPIO } from "@/stores"
-
-  let pinsEnabled = {
-    a: false,
-    b: false,
-    c: false,
-    d: false,
-    f: false,
-    g: false
-  }
-
-  GPIO.subscribe(vals => {
-    pinsEnabled.a = vals[0] == 1
-    pinsEnabled.b = vals[1] == 1
-    pinsEnabled.c = vals[2] == 1
-    pinsEnabled.d = vals[3] == 1
-    pinsEnabled.e = vals[4] == 1
-    pinsEnabled.f = vals[5] == 1
-    pinsEnabled.g = vals[6] == 1
-  })
+  import { GPIO } from "../gpioStores.js"
 </script>
 
 <div class="grid gap-1">
   <div
     class="segment sA"
-    style:background-color={pinsEnabled.a ? "cyan" : "gray"}></div>
+    style:background-color={$GPIO[2] >= 0.9 ? "cyan" : "gray"}></div>
   <div
     class="segment sB"
-    style:background-color={pinsEnabled.b ? "cyan" : "gray"}></div>
+    style:background-color={$GPIO[3] >= 0.9 ? "cyan" : "gray"}></div>
   <div
     class="segment sC"
-    style:background-color={pinsEnabled.c ? "cyan" : "gray"}></div>
+    style:background-color={$GPIO[4] >= 0.9 ? "cyan" : "gray"}></div>
   <div
     class="segment sD"
-    style:background-color={pinsEnabled.d ? "cyan" : "gray"}></div>
+    style:background-color={$GPIO[5] >= 0.9 ? "cyan" : "gray"}></div>
   <div
     class="segment sE"
-    style:background-color={pinsEnabled.e ? "cyan" : "gray"}></div>
+    style:background-color={$GPIO[6] >= 0.9 ? "cyan" : "gray"}></div>
   <div
     class="segment sF"
-    style:background-color={pinsEnabled.f ? "cyan" : "gray"}></div>
+    style:background-color={$GPIO[7] >= 0.9 ? "cyan" : "gray"}></div>
   <div
     class="segment sG"
-    style:background-color={pinsEnabled.g ? "cyan" : "gray"}></div>
+    style:background-color={$GPIO[8] >= 0.9 ? "cyan" : "gray"}></div>
 </div>
 
 <style>
