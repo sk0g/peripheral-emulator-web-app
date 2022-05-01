@@ -3,7 +3,7 @@
 
   import { serialConfBaudRate, serialConfFlowControl, serialConfParity, serialConfStopBits } from "../stores.js"
   import { sendSetupCommands } from "../gpio.js"
-  import { connectToSerial } from "./serialConnection.js"
+  import { connectToSerial, disconnectSerial } from "./serialConnection.js"
 </script>
 
 <div class="serial-conf" transition:fade>
@@ -47,6 +47,9 @@
   </div>
   <div class="divider divider-horizontal"></div>
   <div>
+    <button class="btn btn-primary" on:click={disconnectSerial}>
+      Disconnect
+    </button>
     <button class="btn btn-primary" on:click={connectToSerial}>
       Connect
     </button>

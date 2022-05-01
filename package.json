@@ -19,6 +19,7 @@
     "vite": "^2.9.0"
   },
   "dependencies": {
+    "@types/w3c-web-serial": "^1.0.2",
     "daisyui": "^2.14.2",
     "svelte-slider": "^1.0.1"
   }
