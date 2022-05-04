@@ -1,4 +1,4 @@
-import { to_number } from "svelte/internal"
+import { noop, to_number } from "svelte/internal"
 import { picoGpioPins } from "../gpio.js"
 import { LineBreakTransformer } from "../utils.js"
 
@@ -7,15 +7,17 @@ let sRequestedPort = "Port Requested"
 let sError = "Error!"
 let sConnected = "Connected"
 
-let port, textDecoder, readableStreamClosed, reader
+let isInterfacing = false
+
+let port
+let textDecoder, readableStreamClosed, reader
+let textEncoder, writableStreamClosed, writer
+
+navigator.serial.getPorts().then(p => p.length > 0 ? port = p[0] : port = null)
 
 export async function connectToSerial() {
   try {
-    let ports = await navigator.serial.getPorts()
-    if (ports.length >= 1) {
-      port = ports[0]
-    }
-
+    navigator.serial.getPorts().then(p => p.length > 0 ? port = p[0] : port = null)
     if (port == null) {
       port = await navigator.serial.requestPort()
     }
@@ -28,20 +30,11 @@ export async function connectToSerial() {
     })
 
     console.log(`port open! ${JSON.stringify(port.getInfo())}`)
+    isInterfacing = true
 
-    setupStreams().finally(() => console.log("Done watching input"))
-    //
-    // while (true) {
-    //   let { value, done } = await reader.read()
-    //
-    //   if (done) {
-    //     reader.releaseLock()
-    //     break
-    //   }
-    //
-    //   console.log(`Pico output: ${value}`)
-    //   processMessage(value.trim())
-    // }
+    setupStreams()
+      .finally(() => console.debug("Disconnected?"))
+      .catch((e) => console.warn(e))
   } catch (e) {
     console.warn(e)
   }
@@ -55,44 +48,48 @@ async function setupStreams() {
     .pipeThrough(new TransformStream(new LineBreakTransformer()))
     .getReader()
 
-  while (true) {
+  while (isInterfacing) {
     const { value, done } = await reader.read()
     if (done) {
-      reader.releaseLock()
       break
     }
 
     processMessage(value)
   }
 
-  const textEncoder = new TextEncoderStream()
-  const writableStreamClosed = textEncoder.readable.pipeTo(port.writable)
-
-  reader?.cancel()
-  await readableStreamClosed.catch(() => { /* Ignore the error */
-  })
-
-  port.writer.close()
-  await writableStreamClosed
-
-  await port.close()
+  reader.releaseLock()
 }
 
+export async function testWrite() {
+  await writeLine("po(25)")
+  await writeLine("n(25)")
+}
+
+async function writeLine(line) {
+  writer = port.writable.getWriter()
+  let bytes = new TextEncoder().encode(`${line}\r`)
+  await writer.write(bytes)
+  writer.releaseLock()
+
+  // writer writes and releases instantly, forcing a sleep here :|
+  // not doing so lead to issues where Pico didn't properly process inputs
+  // practically, this shouldn't be an issue. How often would multiple commands need to be executed basically instantly?
+  await new Promise(r => setTimeout(r, 2))
+
+  console.log(`released writer lock, wrote ${bytes}`)
+}
 
 export async function disconnectSerial() {
-  port?.readable.cancel().catch((e) => {
-    console.debug(`trying to close reader - ${e}`)
-  })
-  port?.writable.close().catch((e) => {
-    console.debug(`trying to close writer - ${e}`)
-  })
-  port?.close()
-    .then(() => {
-      console.log("closed port!")
-    })
-    .catch((e) => {
-      console.debug(`trying to close port - ${e}`)
-    })
+  isInterfacing = false
+
+  reader?.cancel()
+
+  await readableStreamClosed?.catch(() => 1 + 1)
+  await writableStreamClosed
+
+  await port?.close()
+    .then(() => console.debug("closed port!"))
+    .catch((e) => console.warn(`trying to close port - ${e} \n ${reader} ${writer}`))
 }
 
 function processMessage(message) {

@@ -32,17 +32,8 @@ class Pin {
   }
 
   updateValue(newValue) {
-    // while (this.locked) {
-    //   1 + 4 << 2
-    // }
-    //
-    // this.locked = true
-
-    console.log(pinStores[this.gpioNumber], newValue)
     pinStores[this.gpioNumber].update(v => v = newValue)
     this.value = newValue
-
-    // this.locked = false
   }
 
   // helpers and utilities
