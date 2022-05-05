@@ -1,7 +1,14 @@
 <script>
+  import { pinStores } from "../gpioStores.js"
+  import { picoGpioPins } from "../gpio.js"
+  import { onDestroy } from "svelte"
+
   const centimetresPerMicrosecond = 0.034
   let distance = 100
   let pulseDuration = 1000
+
+  let inputPin = 2
+  let outputPin = 25
 
   function getFormattedDistance(d) {
     let calcDistance = distance.toFixed(1)
@@ -16,6 +23,14 @@
     pulseDuration = d / centimetresPerMicrosecond * 2
     return pulseDuration < 1000 ? `${pulseDuration.toFixed()} μs` : `${(pulseDuration / 1000).toPrecision(3)} ms`
   }
+
+  let unsub = pinStores[inputPin].subscribe(v => {
+    if (v > .5) {
+      picoGpioPins[outputPin].pulseFor(pulseDuration)
+    }
+  })
+
+  onDestroy(unsub)
 </script>
 
 <div class="flex flex-row flex-nowrap">

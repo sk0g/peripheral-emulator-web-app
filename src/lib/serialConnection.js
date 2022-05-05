@@ -68,6 +68,10 @@ export async function setupDevice() {
 }
 
 export async function writeToPico(line) {
+  if (port.writable == null) {
+    console.warn("Trying to write, but not connected")
+    return
+  }
   writer = port.writable.getWriter()
   let bytes = new TextEncoder().encode(`${line}\r\n`)
   await writer.write(bytes)

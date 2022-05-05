@@ -1,5 +1,6 @@
 import { pinStores } from "./gpioStores.js"
 import { writeToPico } from "./lib/serialConnection.js"
+import { number } from "tailwindcss/lib/util/dataTypes.js"
 
 
 class Pin {
@@ -32,6 +33,16 @@ class Pin {
     this.value = newValue
     if (!this.isInput)
       writeToPico(this.getValueMessage())
+  }
+
+  // TODO: actual implementation
+  //   add new a new function to PICO, pulse pin for duration
+  //   EG p(25,.06) for 60 μs, p(25,23) for 23 ms
+  async pulseFor(duration) {
+    console.log(`pulsing for ${duration} ms`)
+    this.setValue(1)
+    await new Promise(r => setTimeout(r, duration)) // a lot longer than real pulse
+    this.setValue(0)
   }
 
   // helpers and utilities
