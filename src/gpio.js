@@ -1,4 +1,5 @@
 import { pinStores } from "./gpioStores.js"
+import { writeToPico } from "./lib/serialConnection.js"
 
 
 class Pin {
@@ -18,15 +19,10 @@ class Pin {
     this.canInput = canInput
     this.usable = usable
     this.value = value
-
-    this.locked = false
   }
 
   setValue(newValue) {
-    if (!this.isInput) {
-      this.logWarning("setup: should not be set by app")
-      return
-    }
+    this.logGeneral(`new value: ${newValue}`)
 
     this.updateValue(newValue)
   }
@@ -34,6 +30,8 @@ class Pin {
   updateValue(newValue) {
     pinStores[this.gpioNumber].update(v => v = newValue)
     this.value = newValue
+    if (!this.isInput)
+      writeToPico(this.getValueMessage())
   }
 
   // helpers and utilities
@@ -41,6 +39,11 @@ class Pin {
     if (!this.usable) return
 
     return `p${this.isInput ? "i" : "o"}(${this.gpioNumber})`
+  }
+
+  getValueMessage() {
+    const onOrOff = this.value > 0.5 ? "n" : "f"
+    return `${onOrOff}(${this.gpioNumber})`
   }
 
   getPaddedPinNumber() {

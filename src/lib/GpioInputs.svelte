@@ -7,13 +7,11 @@
 {#each picoGpioPins as pin}
   {#if pin.usable && pin.isInput}
     <button
-      class="btn btn-sm btn-block {$GPIO[pin.gpioNumber] <= 0.1 ? 'btn-active' : 'btn-accent'}"
-      on:click={() => {
-      pin.setValue($GPIO[pin.gpioNumber] <= 0.1 ? 1 : 0); console.log($GPIO)
-    }}>
+      class="btn btn-sm btn-block {$GPIO[pin.gpioNumber] <= 0.5 ? 'btn-active' : 'btn-accent'}"
+      on:click={() => pin.setValue($GPIO[pin.gpioNumber] <= 0.5 ? 1 : 0)}
+    >
       GPIO {pin.gpioNumber}
     </button>
     <div class="h-1"></div>
   {/if}
 {/each}
-

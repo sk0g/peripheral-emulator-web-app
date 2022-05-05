@@ -64,12 +64,12 @@ export async function setupDevice() {
   let commands = getSetupCommands()
   console.log(`setupCommands: ${commands}`)
   for (const m of getSetupCommands())
-    await writeLine(m)
+    await writeToPico(m)
 }
 
-async function writeLine(line) {
+export async function writeToPico(line) {
   writer = port.writable.getWriter()
-  let bytes = new TextEncoder().encode(`${line}\r`)
+  let bytes = new TextEncoder().encode(`${line}\r\n`)
   await writer.write(bytes)
   writer.releaseLock()
 

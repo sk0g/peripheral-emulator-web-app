@@ -1,12 +1,14 @@
 <script>
   import { picoGpioPins } from "../gpio.js"
+  import { GPIO } from "../gpioStores.js"
 </script>
 
 <h1 class="text-center">Device Outputs</h1>
 {#each picoGpioPins as pin}
   {#if pin.usable && !pin.isInput}
     <button
-      class="btn btn-sm btn-block {pin.value <= .1 ? 'btn-inactive' : 'btn-accent'}"
+      class="btn btn-sm btn-block {$GPIO[pin.gpioNumber] <= 0.5 ? 'btn-inactive' : 'btn-accent'}"
+      on:click={() => pin.setValue($GPIO[pin.gpioNumber] <= 0.5 ? 1 : 0)}
     >
       GPIO {pin.gpioNumber}
     </button>
