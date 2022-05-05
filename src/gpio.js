@@ -40,7 +40,7 @@ class Pin {
   getSetupMessage() {
     if (!this.usable) return
 
-    return `S${this.isInput ? "I" : "O"}${this.getPaddedPinNumber()}`
+    return `p${this.isInput ? "i" : "o"}(${this.gpioNumber})`
   }
 
   getPaddedPinNumber() {
@@ -73,7 +73,7 @@ export let picoGpioPins = [
   new Pin(11, true),
   new Pin(12, true),
   new Pin(13, true),
-  new Pin(14, true),
+  new Pin(14, false),
   new Pin(15, false),
   new Pin(16, false),
   new Pin(17, false),
@@ -82,8 +82,9 @@ export let picoGpioPins = [
   new Pin(20, false),
   new Pin(21, false),
   new Pin(22, false),
-  new Pin(23, false),
-  new Pin(24, false),
+  // 23, 24, 25 do not have associated pins at all
+  new Pin(23, null, null, null, false),
+  new Pin(24, null, null, null, false),
   // 25 is a special case, it's (virtual) output only and goes to the LED
   new Pin(25, false, false),
   new Pin(26, false),
@@ -91,23 +92,13 @@ export let picoGpioPins = [
   new Pin(28, false)
 ]
 
-export function sendSetupCommands() {
-  for (let p of picoGpioPins) {
-    if (!p.usable) {
-      p.logGeneral(`pin setup: unusable pin ${p.gpioNumber}`)
-      continue
-    }
+export function getSetupCommands() {
+  let result = []
 
-    p.logGeneral(`pin setup: command ${p.getSetupMessage()}`)
+  for (let p of picoGpioPins.filter(p => p.usable)) {
+    let message = p.getSetupMessage()
+    if (message) result.push(message)
   }
-}
 
-// TODO: implement
-//  will need a `canInput` check
-//  should re-work any attached streams, watchers
-function setPinIsInput(gpioNumber) {
-  const p = pins[gpioNumber]
-  if (!p.usable || !p.canInput) {
-    p.logWarning(`pin setup: trying to set up ${gpioNumber} as input, config is ${p}`)
-  }
+  return result
 }

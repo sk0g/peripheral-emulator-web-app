@@ -1,5 +1,5 @@
-import { noop, to_number } from "svelte/internal"
-import { picoGpioPins } from "../gpio.js"
+import { to_number } from "svelte/internal"
+import { getSetupCommands, picoGpioPins } from "../gpio.js"
 import { LineBreakTransformer } from "../utils.js"
 
 let sNotConnected = "Disconnected"
@@ -60,9 +60,11 @@ async function setupStreams() {
   reader.releaseLock()
 }
 
-export async function testWrite() {
-  await writeLine("po(25)")
-  await writeLine("n(25)")
+export async function setupDevice() {
+  let commands = getSetupCommands()
+  console.log(`setupCommands: ${commands}`)
+  for (const m of getSetupCommands())
+    await writeLine(m)
 }
 
 async function writeLine(line) {
@@ -74,7 +76,7 @@ async function writeLine(line) {
   // writer writes and releases instantly, forcing a sleep here :|
   // not doing so lead to issues where Pico didn't properly process inputs
   // practically, this shouldn't be an issue. How often would multiple commands need to be executed basically instantly?
-  await new Promise(r => setTimeout(r, 2))
+  await new Promise(r => setTimeout(r, 5))
 
   console.log(`released writer lock, wrote ${bytes}`)
 }

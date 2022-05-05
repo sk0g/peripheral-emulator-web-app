@@ -2,7 +2,7 @@
   import { fade } from "svelte/transition"
 
   import { serialConfBaudRate, serialConfFlowControl, serialConfParity, serialConfStopBits } from "../stores.js"
-  import { connectToSerial, disconnectSerial, testWrite } from "./serialConnection.js"
+  import { connectToSerial, disconnectSerial, setupDevice } from "./serialConnection.js"
 </script>
 
 <div class="serial-conf" transition:fade>
@@ -49,8 +49,8 @@
     <button class="btn btn-primary" on:click={disconnectSerial}>
       Disconnect
     </button>
-    <button class="btn btn-primary" on:click={testWrite}>
-      TestWrite
+    <button class="btn btn-primary" on:click={setupDevice}>
+      Setup
     </button>
     <button class="btn btn-primary" on:click={connectToSerial}>
       Connect
