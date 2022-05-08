@@ -1,10 +1,10 @@
 <script>
-  import { isDebug } from "../stores.js"
+  import { isDebug, usbConnectionStatus } from "../stores.js"
   import SerialConnector from "./SerialConnector.svelte"
 </script>
 
 <div
-  class="navbar flex flex-row w-full place-content-between bg-primary text-accent"
+  class="navbar flex flex-row w-full place-content-between {$usbConnectionStatus ? 'bg-primary' : 'bg-neutral'} text-accent"
 >
 
   <div class="place-content-center">
