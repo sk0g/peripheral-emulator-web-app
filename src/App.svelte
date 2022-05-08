@@ -9,11 +9,11 @@
 <main>
   <div class="container mx-auto">
     <Header />
-    <div class="grid grid-cols-4 py-4 gap-4">
+    <div class="grid grid-cols-6 py-4 gap-4">
       <div class="col-span-1 basis-1/4 px-2">
         <GpioInputs />
       </div>
-      <div class="col-span-2">
+      <div class="col-span-4">
         <PeripheralSelector></PeripheralSelector>
       </div>
       <div class="col-span-1">
