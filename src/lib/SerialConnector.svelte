@@ -9,6 +9,9 @@
     usbConnectionStatus
   } from "../stores.js"
   import { connectToSerial, disconnectSerial, setupDevice } from "./serialConnection.js"
+  import { onDestroy } from "svelte"
+
+  onDestroy(disconnectSerial)
 </script>
 
 <div class="serial-conf" transition:fade>
