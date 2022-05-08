@@ -50,3 +50,10 @@
   <p style="flex-grow: 15">| 1m</p>
   <p style="flex-direction: row-reverse; margin-right: 5px">4m |</p>
 </div>
+
+<div class="divider">
+</div>
+
+<canvas height="300" width="300">
+
+</canvas>

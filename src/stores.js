@@ -8,6 +8,7 @@ function createWritable(localStorageKey, defaultValue) {
   return result
 }
 
+// local-storage backed stores
 export const selectedComponent = createWritable("selectedComponent", "SevenSegmentDisplay")
 
 export const ultrasonicDistance = createWritable("ultrasonicDistance", "10")
@@ -19,3 +20,6 @@ export const serialConfParity = createWritable("parity", "none")
 export const serialConfFlowControl = createWritable("flowControl", "none")
 
 export const statusSerialConnection = createWritable("statusSerialConnection", "waiting")
+
+// ephemeral stores
+export const usbConnectionStatus = writable(false)

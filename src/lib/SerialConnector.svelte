@@ -1,7 +1,13 @@
 <script>
   import { fade } from "svelte/transition"
 
-  import { serialConfBaudRate, serialConfFlowControl, serialConfParity, serialConfStopBits } from "../stores.js"
+  import {
+    serialConfBaudRate,
+    serialConfFlowControl,
+    serialConfParity,
+    serialConfStopBits,
+    usbConnectionStatus
+  } from "../stores.js"
   import { connectToSerial, disconnectSerial, setupDevice } from "./serialConnection.js"
 </script>
 
@@ -46,15 +52,19 @@
   </div>
   <div class="divider divider-horizontal"></div>
   <div>
-    <button class="btn btn-primary" on:click={disconnectSerial}>
-      Disconnect
-    </button>
-    <button class="btn btn-primary" on:click={setupDevice}>
-      Setup
-    </button>
-    <button class="btn btn-primary" on:click={connectToSerial}>
-      Connect
-    </button>
+    {#if $usbConnectionStatus === true}
+      <button class="btn btn-primary" on:click={disconnectSerial}>
+        Disconnect
+      </button>
+      <button class="btn btn-primary" on:click={setupDevice}>
+        Setup
+      </button>
+    {/if}
+    {#if $usbConnectionStatus === false}
+      <button class="btn btn-primary" on:click={connectToSerial}>
+        Connect
+      </button>
+    {/if}
   </div>
 </div>
 

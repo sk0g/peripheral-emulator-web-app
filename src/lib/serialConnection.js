@@ -1,6 +1,7 @@
 import { to_number } from "svelte/internal"
 import { getSetupCommands, picoGpioPins } from "../gpio.js"
 import { LineBreakTransformer } from "../utils.js"
+import { usbConnectionStatus } from "../stores.js"
 
 let sNotConnected = "Disconnected"
 let sRequestedPort = "Port Requested"
@@ -14,6 +15,11 @@ let textDecoder, readableStreamClosed, reader
 let textEncoder, writableStreamClosed, writer
 
 navigator.serial.getPorts().then(p => p.length > 0 ? port = p[0] : port = null)
+
+function updateConnectionStatus(toValue) {
+  usbConnectionStatus.update(v => v = toValue)
+  console.log(`set to ${toValue}`)
+}
 
 export async function connectToSerial() {
   try {
@@ -30,6 +36,7 @@ export async function connectToSerial() {
     })
 
     console.log(`port open! ${JSON.stringify(port.getInfo())}`)
+    updateConnectionStatus(true)
     isInterfacing = true
 
     setupStreams()
@@ -96,6 +103,8 @@ export async function disconnectSerial() {
   await port?.close()
     .then(() => console.debug("closed port!"))
     .catch((e) => console.warn(`trying to close port - ${e} \n ${reader} ${writer}`))
+
+  updateConnectionStatus(false)
 }
 
 function processMessage(message) {
