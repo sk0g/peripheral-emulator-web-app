@@ -54,6 +54,7 @@ async function setupStreams() {
     .readable
     .pipeThrough(new TransformStream(new LineBreakTransformer()))
     .getReader()
+  writer = port.writable.getWriter()
 
   while (isInterfacing) {
     const { value, done } = await reader.read()
@@ -64,6 +65,7 @@ async function setupStreams() {
     processMessage(value)
   }
 
+  writer?.releaseLock()
   reader.releaseLock()
 }
 
@@ -79,17 +81,19 @@ export async function writeToPico(line) {
     console.warn("Trying to write, but not connected")
     return
   }
-  writer = port.writable.getWriter()
+  // writer = port.writable.getWriter()
   let bytes = new TextEncoder().encode(`${line}\r\n`)
   await writer.write(bytes)
-  writer.releaseLock()
+  // writer.releaseLock()
 
   // writer writes and releases instantly, forcing a sleep here :|
   // not doing so lead to issues where Pico didn't properly process inputs
   // practically, this shouldn't be an issue. How often would multiple commands need to be executed basically instantly?
   await new Promise(r => setTimeout(r, 5))
 
-  console.log(`released writer lock, wrote ${bytes}`)
+  console.info(`message written ${line} | ${bytes}`)
+
+  if (line.includes("n(14)") || line.includes("f(14)")) console.trace()
 }
 
 export async function disconnectSerial() {
@@ -100,6 +104,8 @@ export async function disconnectSerial() {
   await readableStreamClosed?.catch(() => 1 + 1)
   await writableStreamClosed
 
+  writer?.releaseLock()
+
   await port?.close()
     .then(() => console.debug("closed port!"))
     .catch((e) => console.warn(`trying to close port - ${e} \n ${reader} ${writer}`))
@@ -108,6 +114,11 @@ export async function disconnectSerial() {
 }
 
 function processMessage(message) {
+  // sometimes a new line does not get added to update messages,
+  // and is printed into the REPL prompt line itself
+  message = message.replace(">>> ", "")
+  console.info(message)
+
   function updatePortValue() {
     let rPortUpdated = new RegExp(/^(\d\d)\|(\d)$/g)
     let result = [...message.matchAll(rPortUpdated)]
@@ -116,10 +127,10 @@ function processMessage(message) {
 
     let portNumber = to_number(result[0][1])
     let value = to_number(result[0][2])
-    console.log(`message parsed, setting ${portNumber} to ${value}`)
-    picoGpioPins[portNumber].updateValue(value)
+    console.info(`message parsed, updating ${portNumber} to ${value}`)
+    picoGpioPins[portNumber].setValue(value)
     return true
   }
 
-  updatePortValue() || console.log(`unrecognised message ${message}`)
+  updatePortValue() || console.debug(`unrecognised message ${message}`)
 }

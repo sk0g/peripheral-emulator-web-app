@@ -27,7 +27,7 @@
     <div class="dropdown dropdown-hover">
       <button class="btn p-3 btn-neutral" tabindex="0">Configure Serial</button>
       <div
-        class="dropdown-content menu px-2 shadow bg-neutral text-neutral rounded-box w-52"
+        class="dropdown-content menu px-2 shadow bg-neutral text-neutral-content rounded-box w-52"
         tabindex="0">
         <div class="divider divider-vertical text-neutral-content">Baud Rate</div>
         <select bind:value={$serialConfBaudRate} class="select select-sm" id="baud"

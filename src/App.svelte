@@ -5,7 +5,7 @@
   import GpioOutputs from "./lib/GpioOutputs.svelte"
 </script>
 
-<html data-theme="garden" lang="en-AU">
+<html data-theme="coffee" lang="en-AU">
 <main>
   <div class="container mx-auto">
     <Header />

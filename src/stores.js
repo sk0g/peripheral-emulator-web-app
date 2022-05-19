@@ -21,5 +21,8 @@ export const serialConfFlowControl = createWritable("flowControl", "none")
 
 export const statusSerialConnection = createWritable("statusSerialConnection", "waiting")
 
+export const ultrasonicInputPin = createWritable("ultrasonicInputPin", "2")
+export const ultrasonicOutputPin = createWritable("ultrasonicOutputPin", "25")
+
 // ephemeral stores
 export const usbConnectionStatus = writable(false)
