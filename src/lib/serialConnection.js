@@ -82,14 +82,14 @@ export async function writeToPico(line) {
     return
   }
   // writer = port.writable.getWriter()
-  let bytes = new TextEncoder().encode(`${line}\r\n`)
+  let bytes = new TextEncoder().encode(`${line}\r`)
   await writer.write(bytes)
   // writer.releaseLock()
 
   // writer writes and releases instantly, forcing a sleep here :|
   // not doing so lead to issues where Pico didn't properly process inputs
   // practically, this shouldn't be an issue. How often would multiple commands need to be executed basically instantly?
-  await new Promise(r => setTimeout(r, 5))
+  await new Promise(r => setTimeout(r, 1))
 
   console.info(`message written ${line} | ${bytes}`)
 

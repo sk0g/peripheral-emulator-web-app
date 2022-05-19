@@ -25,7 +25,7 @@
 
   let unsub = pinStores[to_number($ultrasonicInputPin)].subscribe(v => {
     if (v > .5) {
-      picoGpioPins[to_number($ultrasonicOutputPin)].pulseFor(pulseDurationMicroseconds / 1000)
+      picoGpioPins[to_number($ultrasonicOutputPin)].pulseFor(pulseDurationMicroseconds)
     }
   })
   onDestroy(unsub)

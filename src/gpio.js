@@ -1,6 +1,5 @@
 import { pinStores } from "./gpioStores.js"
 import { writeToPico } from "./lib/serialConnection.js"
-import { number } from "tailwindcss/lib/util/dataTypes.js"
 
 
 class Pin {
@@ -25,9 +24,8 @@ class Pin {
   updateValue(newValue) {
     this.logGeneral(`new value: ${newValue}`)
     this.setValue(newValue)
-    
-    if (!this.isInput)
-      writeToPico(this.getValueMessage())
+
+    writeToPico(this.getValueMessage())
   }
 
   setValue(newValue) {
@@ -36,7 +34,7 @@ class Pin {
   }
 
   async pulseFor(duration) {
-    writeToPico(`p(${this.gpioNumber},${Number(duration.toPrecision(3))})`)
+    writeToPico(`p${this.gpioNumber},${Number(duration.toPrecision(3))}`)
   }
 
   // helpers and utilities
@@ -48,7 +46,7 @@ class Pin {
 
   getValueMessage() {
     const onOrOff = this.value > 0.5 ? "n" : "f"
-    return `${onOrOff}(${this.gpioNumber})`
+    return `${onOrOff}${this.gpioNumber}`
   }
 
   getPaddedPinNumber() {
@@ -65,40 +63,10 @@ class Pin {
   }
 }
 
-export let picoGpioPins = [
-  // 0 and 1 are used for UART communication, do not mess with them
-  new Pin(0, null, null, null, false),
-  new Pin(1, null, null, null, false),
-  new Pin(2, true),
-  new Pin(3, true),
-  new Pin(4, true),
-  new Pin(5, true),
-  new Pin(6, true),
-  new Pin(7, true),
-  new Pin(8, true),
-  new Pin(9, true),
-  new Pin(10, true),
-  new Pin(11, true),
-  new Pin(12, true),
-  new Pin(13, true),
-  new Pin(14, false),
-  new Pin(15, false),
-  new Pin(16, false),
-  new Pin(17, false),
-  new Pin(18, false),
-  new Pin(19, false),
-  new Pin(20, false),
-  new Pin(21, false),
-  new Pin(22, false),
-  // 23, 24, 25 do not have associated pins at all
-  new Pin(23, null, null, null, false),
-  new Pin(24, null, null, null, false),
-  // 25 is a special case, it's (virtual) output only and goes to the LED
-  new Pin(25, false, false),
-  new Pin(26, false),
-  new Pin(27, false),
-  new Pin(28, false)
-]
+export let picoGpioPins = [// 0 and 1 are used for UART communication, do not mess with them
+  new Pin(0, null, null, null, false), new Pin(1, null, null, null, false), new Pin(2, true), new Pin(3, true), new Pin(4, true), new Pin(5, true), new Pin(6, true), new Pin(7, true), new Pin(8, true), new Pin(9, true), new Pin(10, true), new Pin(11, true), new Pin(12, true), new Pin(13, true), new Pin(14, false), new Pin(15, false), new Pin(16, false), new Pin(17, false), new Pin(18, false), new Pin(19, false), new Pin(20, false), new Pin(21, false), new Pin(22, false), // 23, 24, 25 do not have associated pins at all
+  new Pin(23, null, null, null, false), new Pin(24, null, null, null, false), // 25 is a special case, it's (virtual) output only and goes to the LED
+  new Pin(25, false, false), new Pin(26, false), new Pin(27, false), new Pin(28, false)]
 
 export function getSetupCommands() {
   let result = []

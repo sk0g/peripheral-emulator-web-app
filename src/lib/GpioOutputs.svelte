@@ -7,7 +7,7 @@
 {#each picoGpioPins.filter(p => p.usable && !p.isInput) as pin}
   <button
     class="btn btn-sm btn-block {$GPIO[pin.gpioNumber] <= 0.5 ? 'btn-inactive' : 'btn-accent'}"
-    on:click={() => pin.setValue($GPIO[pin.gpioNumber] <= 0.5 ? 1 : 0)}
+    on:click={() => pin.updateValue($GPIO[pin.gpioNumber] <= 0.5 ? 1 : 0)}
   >
     GPIO {pin.gpioNumber}
   </button>
