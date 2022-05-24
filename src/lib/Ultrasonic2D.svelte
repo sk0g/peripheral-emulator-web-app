@@ -9,12 +9,19 @@
   let canvas
 
   function click(e) {
-    console.log(clickLocationToParameter(e))
+    let clickLocation = clickLocationToParameter(e)
+    let ctx = canvas.getContext("2d")
+
+    ctx.beginPath()
+    ctx.arc(clickLocation.x, clickLocation.y, 10, 0, 360)
+    ctx.stroke()
   }
 
   function clickLocationToParameter(e) {
-    console.log(e)
-    return { "x": e.offsetX, "y": e.offsetY }
+    return {
+      "x": e.offsetX / e.target.getBoundingClientRect().width * 800,
+      "y": e.offsetY / e.target.getBoundingClientRect().height * 400
+    }
   }
 
   function renderGridLines(canvas, ctx) {
