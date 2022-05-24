@@ -4,12 +4,15 @@
   const horizontalGridLines = 40
   const verticalGridLines = 20
   const circleRadius = 15
+
   const darkLineStyle = `rgba(0, 0, 0, 1)`
   const lightLineStyle = `rgba(150, 150, 150, .8)`
+  const sensorLineStyle = `rgb(20, 180, 30)`
   const circleFillStyle = `rgba(255, 111, 97, .75)`
 
   let canvas, ctx
   let circles = []
+  let sensorAngle = 45
 
   function distanceBetweenPoints(x1, x2, y1, y2) {
     return Math.sqrt(Math.pow(x1 - x2, 2) + Math.pow(y1 - y2, 2))
@@ -23,13 +26,32 @@
     ctx.fill()
   }
 
+  function clearGrid() {
+    ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height)
+    renderGridLines()
+  }
+
+  function drawPulseWithAngle(angle) {
+    // 0 - straight on, 90 full right, -90 full left
+    ctx.beginPath()
+    ctx.moveTo(400, 400)
+    ctx.lineWidth = 4
+    ctx.strokeStyle = sensorLineStyle
+    ctx.lineTo(
+      400 - (400 * Math.cos(angle * Math.PI / 180)),
+      400 - (400 * Math.sin(angle * Math.PI / 180))
+    )
+    ctx.stroke()
+  }
+
   $: {
     if (ctx && canvas) {
-      ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height)
-      renderGridLines()
+      clearGrid()
       circles.forEach(c => drawCircleAt(c.x, c.y))
+      drawPulseWithAngle(sensorAngle)
     }
   }
+
 
   function click(e) {
     let clickLoc = clickLocationToParameter(e)
