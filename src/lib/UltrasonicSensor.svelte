@@ -4,6 +4,7 @@
   import { onDestroy } from "svelte"
   import { ultrasonicInputPin, ultrasonicOutputPin } from "../stores.js"
   import { to_number } from "svelte/internal"
+  import Ultrasonic2D from "./Ultrasonic2D.svelte"
 
   const centimetresPerMicrosecond = 0.034
   let distanceCentimetres = 100
@@ -87,6 +88,4 @@
 <div class="divider">
 </div>
 
-<canvas height="300" width="300">
-
-</canvas>
+<Ultrasonic2D></Ultrasonic2D>
