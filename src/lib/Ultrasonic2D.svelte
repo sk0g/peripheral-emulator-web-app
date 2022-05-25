@@ -1,5 +1,6 @@
 <script>
-  import { onMount } from "svelte"
+  import { onDestroy, onMount } from "svelte"
+  import { pinStores } from "../gpioStores.js"
 
   const horizontalGridLines = 40
   const verticalGridLines = 20
@@ -12,7 +13,7 @@
 
   let canvas, ctx
   let circles = []
-  let sensorAngle = 45
+  let sensorAngle = 0
 
   function distanceBetweenPoints(x1, x2, y1, y2) {
     return Math.sqrt(Math.pow(x1 - x2, 2) + Math.pow(y1 - y2, 2))
@@ -37,10 +38,14 @@
     ctx.moveTo(400, 400)
     ctx.lineWidth = 4
     ctx.strokeStyle = sensorLineStyle
-    ctx.lineTo(
-      400 - (400 * Math.cos(angle * Math.PI / 180)),
-      400 - (400 * Math.sin(angle * Math.PI / 180))
-    )
+
+    // don't ask how, it just works (TM)
+    let angle_radians = angle * Math.PI / 180
+    let targetX = 400 + (400 * Math.sin(angle_radians))
+    let targetY = 400 - (400 * Math.cos(angle_radians))
+
+    console.info(angle, targetX, targetY)
+    ctx.lineTo(targetX, targetY)
     ctx.stroke()
   }
 
@@ -52,9 +57,9 @@
     }
   }
 
-
   function click(e) {
     let clickLoc = clickLocationToParameter(e)
+    console.info(clickLoc)
 
     let tempCircles = circles
       .filter(c => distanceBetweenPoints(c.x, clickLoc.x, c.y, clickLoc.y) > circleRadius)
@@ -97,6 +102,11 @@
 
     renderGridLines(canvas)
   })
+
+  let unsub = pinStores[13].subscribe(v => {
+    sensorAngle = 180 * (v - 1.5)
+  })
+  onDestroy(unsub)
 </script>
 
 <canvas height="400" id="grid" on:click={click} style="background-color: beige" width="800">
