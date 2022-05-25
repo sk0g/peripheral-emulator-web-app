@@ -132,5 +132,19 @@ function processMessage(message) {
     return true
   }
 
-  updatePortValue() || console.debug(`unrecognised message ${message}`)
+  function updatePwmValue() {
+    let rg = new RegExp(/^(\d\d)\^(\d\.\d\d\d)$/g)
+    let result = [...message.matchAll(rg)]
+    console.info(result)
+
+    if (result && result[0] == null) return false
+
+    let portNumber = to_number(result[0][1])
+    let pulseDuration = to_number(result[0][2])
+    console.info(`message parsed, updating ${portNumber} duration to ${pulseDuration}`)
+    picoGpioPins[portNumber].setValue(pulseDuration)
+    return true
+  }
+
+  updatePortValue() || updatePwmValue() || console.debug(`unrecognised message ${message}`)
 }
