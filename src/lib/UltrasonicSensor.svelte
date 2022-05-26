@@ -83,6 +83,7 @@
 
 <input
   on:input={handleSliderInput}
+  bind:value={$ultrasonicAngle}
   class="range range-primary range-xs"
   max="90"
   min="-90"
