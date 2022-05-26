@@ -2,7 +2,7 @@
   import { pinStores } from "../gpioStores.js"
   import { picoGpioPins } from "../gpio.js"
   import { onDestroy } from "svelte"
-  import { ultrasonicInputPin, ultrasonicOutputPin } from "../stores.js"
+  import { ultrasonicAngle, ultrasonicDetectedDistance, ultrasonicInputPin, ultrasonicOutputPin } from "../stores.js"
   import { to_number } from "svelte/internal"
   import Ultrasonic2D from "./Ultrasonic2D.svelte"
 
@@ -10,13 +10,22 @@
   let distanceCentimetres = 100
   let pulseDurationMicroseconds = 1000
 
+  $: {
+    distanceCentimetres = to_number($ultrasonicDetectedDistance).toFixed(2)
+  }
+
   function getFormattedDistance(d) {
-    let calcDistance = distanceCentimetres.toFixed(1)
+    let calcDistance = distanceCentimetres
 
     if (calcDistance >= 100) {
-      return `${calcDistance / 100} m`
+      return `${(calcDistance / 100).toFixed(2)} m`
     }
     return `${calcDistance} cm`
+  }
+
+  function handleSliderInput(e) {
+    ultrasonicAngle.update(v => v = to_number(e.target.value))
+    return e.target.value
   }
 
   function getPulseDuration(d) {
@@ -73,16 +82,17 @@
 </div>
 
 <input
-  bind:value={distanceCentimetres}
+  on:input={handleSliderInput}
   class="range range-primary range-xs"
-  max="400"
-  min="1"
+  max="90"
+  min="-90"
+  step="0.1"
   type="range"
 >
 <div class="flex flex-row flex-nowrap">
-  <p style="flex-grow: 4; margin-left: 5px;">| 8cm</p>
-  <p style="flex-grow: 15">| 1m</p>
-  <p style="flex-direction: row-reverse; margin-right: 5px">4m |</p>
+  <p style="flex-grow: 4; margin-left: 5px;">| -90°</p>
+  <p style="flex-grow: 4; margin-left: 12px;">| 0°</p>
+  <p style="flex-direction: row-reverse; margin-right: 5px">90° |</p>
 </div>
 
 <div class="divider">

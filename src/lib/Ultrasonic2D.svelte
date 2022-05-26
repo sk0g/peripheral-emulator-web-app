@@ -1,6 +1,12 @@
 <script>
   import { onDestroy, onMount } from "svelte"
   import { pinStores } from "../gpioStores.js"
+  import { ultrasonicAngle, ultrasonicDetectedDistance } from "../stores.js"
+  import { to_number } from "svelte/internal"
+  import { lineIntersectsCircle } from "../mathUtils.js"
+
+
+  export let detectedDistance = 0
 
   const horizontalGridLines = 40
   const verticalGridLines = 20
@@ -13,7 +19,7 @@
 
   let canvas, ctx
   let circles = []
-  let sensorAngle = 0
+  let lineEndX, lineEndY
 
   function distanceBetweenPoints(x1, x2, y1, y2) {
     return Math.sqrt(Math.pow(x1 - x2, 2) + Math.pow(y1 - y2, 2))
@@ -41,11 +47,10 @@
 
     // don't ask how, it just works (TM)
     let angle_radians = angle * Math.PI / 180
-    let targetX = 400 + (400 * Math.sin(angle_radians))
-    let targetY = 400 - (400 * Math.cos(angle_radians))
+    lineEndX = 400 + (400 * Math.sin(angle_radians))
+    lineEndY = 400 - (400 * Math.cos(angle_radians))
 
-    console.info(angle, targetX, targetY)
-    ctx.lineTo(targetX, targetY)
+    ctx.lineTo(lineEndX, lineEndY)
     ctx.stroke()
   }
 
@@ -53,8 +58,25 @@
     if (ctx && canvas) {
       clearGrid()
       circles.forEach(c => drawCircleAt(c.x, c.y))
-      drawPulseWithAngle(sensorAngle)
+      drawPulseWithAngle(to_number($ultrasonicAngle))
     }
+  }
+
+  function updateDistanceForNewLineEndings(endX, endY) {
+    let distance = 1000
+
+    let circleDistances = circles
+      .map(c => lineIntersectsCircle({ x: 400, y: 400 }, { x: endX, y: endY }, c, circleRadius))
+      .filter(d => d != 0)
+      .sort()
+
+    if (circleDistances.length > 0) distance = circleDistances[circleDistances.length - 1]
+
+    ultrasonicDetectedDistance.update(v => v = distance)
+  }
+
+  $: {
+    updateDistanceForNewLineEndings(lineEndX, lineEndY)
   }
 
   function click(e) {
@@ -103,8 +125,8 @@
     renderGridLines(canvas)
   })
 
-  let unsub = pinStores[13].subscribe(v => {
-    sensorAngle = 180 * (v - 1.5)
+  let unsub = pinStores[13].subscribe(newVal => {
+    ultrasonicAngle.update(v => v = 180 * (newVal - 1.5))
   })
   onDestroy(unsub)
 </script>

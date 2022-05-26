@@ -23,6 +23,8 @@ export const statusSerialConnection = createWritable("statusSerialConnection", "
 
 export const ultrasonicInputPin = createWritable("ultrasonicInputPin", "2")
 export const ultrasonicOutputPin = createWritable("ultrasonicOutputPin", "25")
+export const ultrasonicAngle = createWritable("ultrasonicAngle", "0")
+export const ultrasonicDetectedDistance = createWritable("ultrasonicDetectedDistance", "100")
 
 // ephemeral stores
 export const usbConnectionStatus = writable(false)

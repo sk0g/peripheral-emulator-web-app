@@ -1,6 +1,6 @@
 // weird gradient descent/ binary search for the smallest distance
 // along the segment l1 => l2 to the point c
-function lineIntersectsCircle(l1, l2, c, cr) {
+export function lineIntersectsCircle(l1, l2, c, cr) {
   function getWeightedPoints(biasTowardsL1) {
     return {
       x: l2.x * biasTowardsL1 + l1.x * (1 - biasTowardsL1),
@@ -35,6 +35,3 @@ function lineIntersectsCircle(l1, l2, c, cr) {
 
   return distanceToCenter <= cr ? distanceOnSegment : 0
 }
-
-
-module.exports = lineIntersectsCircle
