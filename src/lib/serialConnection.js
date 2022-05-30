@@ -92,8 +92,6 @@ export async function writeToPico(line) {
   await new Promise(r => setTimeout(r, 1))
 
   console.info(`message written ${line} | ${bytes}`)
-
-  if (line.includes("n(14)") || line.includes("f(14)")) console.trace()
 }
 
 export async function disconnectSerial() {
