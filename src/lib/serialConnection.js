@@ -14,7 +14,7 @@ let port
 let textDecoder, readableStreamClosed, reader
 let textEncoder, writableStreamClosed, writer
 
-navigator.serial.getPorts().then(p => p.length > 0 ? port = p[0] : port = null)
+navigator?.serial?.getPorts().then(p => p.length > 0 ? port = p[0] : port = null)
 
 function updateConnectionStatus(toValue) {
   usbConnectionStatus.update(v => v = toValue)
